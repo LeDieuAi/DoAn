@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item"
+         android:title="TRANG CHỦ"
+        android:icon="@drawable/huyhieudoan"/>
+    <item android:id="@+id/DoanCS"
+        android:title="ĐOÀN CƠ SỞ"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/ChiDoan"
+        android:title="CHI ĐOÀN "
+        android:icon="@drawable/huyhieudoan" />
+
+    <item android:id="@+id/Doanvien"
+        android:title="ĐOÀN VIÊN"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/Sukien"
+        android:title="SỰ KIỆN"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/Hoatdong"
+        android:title="HOẠT ĐỘNG"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/Thamgiahd"
+        android:title="THAM GIA HOẠT ĐỘNG"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/tochuchd"
+        android:title="TỔ CHỨC HOẠT ĐỘNG"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/Xeploai"
+        android:title="XẾP LOẠI"
+        android:icon="@drawable/huyhieudoan"/>
+
+    <item android:id="@+id/ketqua"
+        android:title="KẾT QUẢ"
+        android:icon="@drawable/huyhieudoan"/>
+
+</menu>
