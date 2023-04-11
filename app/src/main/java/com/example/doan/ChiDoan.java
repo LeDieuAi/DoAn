@@ -11,7 +11,9 @@ public class ChiDoan extends AppCompatActivity {
 SQLiteDatabase database = null;
         String SKPT ="SKPT.db";
         EditText editMa_cd,edit_tencd,edit_SLDV,edit_tenBT,edit_madcs;
-        ArrayList listshow;
+        ArrayList classChidoan,classDoanCS;
+        ListView listShow;
+        
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,7 @@ SQLiteDatabase database = null;
             String sldv=edit_SLDV.getText().toString();
             String tenbt=edit_tenBT.getText().toString();
             String madcs=edit_madcs.getText().toString();
+
         String sql ="DELETE FROM CHIDOAN WHERE MACD='"+macd+"','"+tencd+"','"+sldv+"','"+tenbt+"'.'"+madcs+"')";
         if(doAction(sql)==true)
         {
@@ -105,21 +108,59 @@ SQLiteDatabase database = null;
             String tenbt=edit_tenBT.getText().toString();
             String madcs=edit_madcs.getText().toString();
    
-        
-        
-        
-        
-        
-        
+        String sql="UPDATE CHIDOAN SET TENCD='"+tencd+"',SLDV='"+sldv+"',HOTENBT='"+tenbt+"',MADCS='"+madcs+"'WHERE MACD='"+macd+"'";
+             if(doAction(sql)==true)
+        {
+             Toast.makeText(ChiDoanActivity.this,"Sua thanh cong",Toast.LENGTH_SHORT).showw();
+           
         }
+        else
+             Toast.makeText(ChiDoanActivity.this,"Sua [KHONG] thanh cong",Toast.LENGTH_SHORT).showw();        
+        }
+    public void xoadulieuActivity()
+    {
+          editMa_cd.setText("");
+                edit_tencd.setText("");
+                edit_sldv.setText("");
+                ediT_tenBT.setText("");
+                edit_mdcs.setText("");
+                editMa_cd.findFocus();
         
-        
-        
-        
-        
-        
-        
-        
+    }
+        public void hienthiChidoan(){
+                ClassChiDoan=new ArrayList();
+                String sql ="SELECT MACD, TENCD, SLDV,HOTENBT,MADCS FROM CHIDOAN ORDER BY MACD";
+                database=openOrCreateDatabase("SKPT.db",MODE_PRIVATE,null);
+                Cursor cursor=database.rawQuery(sql,null);
+    if(cursor.moveToFirst()){
+        do{
+listShow.add(new ClassChiDoan (cursor.getString(0),cursor.getString(1),cursor.getString(2)));
+        }
+            while (cursor.moveToNext());
+    }
+    database.close();
+    //Gan du lieu cho ListView
+    ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1, listShow);
+    lvsinhvien.setAdapter(adapter);
+}
+public boolean doAction(String sql){
+    try {
+            //Mo CSDL
+            database=openOrCreateDatabase("SKPT.db",MODE_PRIVATE,null);
+            //Thuc thi
+            database.execSQL(sql);
+            //Thuc thi thanh cong tra ve true
+            return true;
+    }
+    catch (Exception exception){
+        //Thuc thi khong thanh cong tra ve false
+        return false;
+    }
+    finally {
+        //Dong database
+        database.close();
+    }
+}     
     //gan menu
     public boolean onCreateOptionsMenu(Menu menu)
     {
