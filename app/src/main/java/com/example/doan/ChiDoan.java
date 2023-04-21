@@ -11,8 +11,9 @@ public class ChiDoan extends AppCompatActivity {
 SQLiteDatabase database = null;
         String SKPT ="SKPT.db";
         EditText editMa_cd,edit_tencd,edit_SLDV,edit_tenBT,edit_madcs;
-        ArrayList classChidoan,classDoanCS;
+    //sửa    ArrayList listChiDoan,listDCS;
         ListView listShow;
+        //sửa Spinner MADCS;
         
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,31 @@ SQLiteDatabase database = null;
         Button XOA=(Button) findViewById(R.id.btnXoa);
         Button SUA=(Button) findViewById(R.id.btnSua);
         Button HIENTHI=(Button) findViewById(R.id.btnHienthi);
-        
+        Spinner MADCS=(Spinner) findViewById(R.id.spimadcs);
+         
+         listshow.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ClassChiDoan chidoan=(ClassChiDoan) listChiDoan.get(i);
+                    editMaCD.setText(chidoan.maChiDoan);
+                    editTenCD.setText(chidoan.tenChiDoan);
+                    editSLDV.setText(chidoan.SDLV);
+                    editTenBT.setText(chidoan.tenBT);
+                    editMaDCS.setText(chidoan.MaDCS);
+                    return false;
+            }
+});
+            MADCS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    ClassDCS dcs=(ClassDCS) ClassDCS.get(i);
+                    maDCS=chude.maDCS;
+               
+}
+                      public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(ChiDoanActivity.this, Toast.LENGTH_SHORT).show();
+            }
+        });
         THEM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +99,8 @@ SQLiteDatabase database = null;
                 ediT_tenBT.setText("");
                 edit_mdcs.setText("");
                 editMa_cd.findFocus();
+                    hienthiChiDoan();
+                    doClear();
             }
             else
                 Toast.makeText(ChiDoanActivity.this,"Them khong thanh cong",Toast.LENGTH_SHORT).show();
@@ -96,6 +123,8 @@ SQLiteDatabase database = null;
                 ediT_tenBT.setText("");
                 edit_mdcs.setText("");
                 editMa_cd.findFocus();
+                hienthiChiDoan();
+                doClear();
         }
         else
              Toast.makeText(ChiDoanActivity.this,"Xoa [KHONG] thanh cong",Toast.LENGTH_SHORT).showw();
@@ -112,24 +141,16 @@ SQLiteDatabase database = null;
              if(doAction(sql)==true)
         {
              Toast.makeText(ChiDoanActivity.this,"Sua thanh cong",Toast.LENGTH_SHORT).showw();
-           
+           hienthiChiDoan();
+                     doClear();
         }
         else
              Toast.makeText(ChiDoanActivity.this,"Sua [KHONG] thanh cong",Toast.LENGTH_SHORT).showw();        
         }
-    public void xoadulieuActivity()
-    {
-          editMa_cd.setText("");
-                edit_tencd.setText("");
-                edit_sldv.setText("");
-                ediT_tenBT.setText("");
-                edit_mdcs.setText("");
-                editMa_cd.findFocus();
         
-    }
-        public void hienthiChidoan(){
+ public void hienthiChidoan(){
                 ClassChiDoan=new ArrayList();
-                String sql ="SELECT MACD, TENCD, SLDV,HOTENBT,MADCS FROM CHIDOAN ORDER BY MACD";
+            //sửa lại thành    String sql ="SELECT * FROM CHIDOAN";
                 database=openOrCreateDatabase("SKPT.db",MODE_PRIVATE,null);
                 Cursor cursor=database.rawQuery(sql,null);
     if(cursor.moveToFirst()){
@@ -169,5 +190,30 @@ public boolean doAction(String sql){
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-}
-}
+      public void doClear()
+      {
+              editMaCD.setText("");
+              editTenCD.setText("");
+              editSLDV.setText("");
+              editTenBT.setText("");
+              editMaDCS.setText("");
+      }
+              
+        
+            public void hienthiSpinnerMaCDS()
+            {
+                    listDCS=new Arraylist();
+                    String sql="SELECT* FROM DOANCOSO ORDER BY TENDCS";
+                         database=openOrCreateDatabase(SKPT,MODE_PRIVATE,null);
+        Cursor cursor=database.rawQuery(sql,null);
+        if(cursor.moveToFirst()){
+            do{
+                listChiDoan.add(new ClassChiDoan(cursor.getString(0),cursor.getString(1)));
+            }while (cursor.moveToNext());
+        }
+             database.close();
+        ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.simple_spinner_item,listDCS);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        MADCS.setAdapter(adapter);
+    }
+                     
